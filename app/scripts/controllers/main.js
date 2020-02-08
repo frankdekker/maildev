@@ -14,7 +14,7 @@ app.controller('MainCtrl', [
     $scope.currentItemId = null
     $scope.notificationsSupported = 'Notification' in window
     $scope.webNotifications = window.Notification && window.Notification.permission === 'granted'
-    $scope.autoShow = false
+    $scope.autoShow = window.localStorage && window.localStorage.getItem('MailDev.autoShow') === '1'
     $scope.unreadItems = 0
 
     var countUnread = function () {
@@ -106,6 +106,9 @@ app.controller('MainCtrl', [
 
     $scope.toggleAutoShow = function () {
       $scope.autoShow = !$scope.autoShow
+      if (window.localStorage) {
+        window.localStorage.setItem('MailDev.autoShow', $scope.autoShow ? '1' : '0')
+      }
     }
 
     $scope.enableNotifications = function () {
